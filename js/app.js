@@ -98,6 +98,7 @@ var getAnswerers = function (answerers) {
             $('.search-results').html(searchResults);
             $.each(result.items, function (key, value) {
                 var inspiration = showInspiration(value);
+                //console.log(value);
                 $('.results').append(inspiration);
             });
         })
@@ -108,8 +109,28 @@ var getAnswerers = function (answerers) {
 };
 
 var showInspiration = function (itemData) {
-    //user name, image, post count, score
-    var userName = itemData.display_name;
+    var userName = itemData.user.display_name;
+    var userPosts = itemData.post_count;
+    var userScore = itemData.score;
+
+
+    var result = $('.templates .inspiration').clone();
+    var image = "<img src='" + itemData.user.profile_image + "' alt='" + itemData.user.display_name + "'>";
+    //var inspireImg = result.find('.inspire-text img');
+    //console.log(inspireImg);
+    //inspireImg.attr('src', userImage);
+    //console.log(inspireImg.attr('src', itemData.user.profile_image));
+    var inspireUser = result.find('.inspire-text');
+    inspireUser.html(userName + " " + image);
+
+    var inspirePosts = result.find('.numPosts');
+    inspirePosts.text(userPosts);
+    var inspireScore = result.find('.score');
+    inspireScore.text(userScore);
+
+
+    return result;
+
 };
 
 $(document).ready(function () {
